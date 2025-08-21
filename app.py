@@ -78,14 +78,15 @@ def inject_branding_css():
                 color: #a5f3fc; /* lighter cyan */
             }
         }
+        /* Rectangular slabs (user role buttons) now same style as Admin */
         .stButton>button {
             background: linear-gradient(145deg, #111827, #1e293b);
-            border: 2px solid rgba(34,211,238,0.4);
+            border: 2px solid rgba(34,211,238,0.6); /* match admin */
             border-radius: 16px;
-            padding: 24px 42px;
+            padding: 16px 32px;  /* match admin */
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 16px;  /* same as admin */
             color: white;
             letter-spacing: 0.05em;
             cursor: pointer;
@@ -95,10 +96,10 @@ def inject_branding_css():
             height: 120px;
         }
         .stButton>button:hover {
-            transform: translateY(-4px) scale(1.03);
+            transform: translateY(-3px) scale(1.02); /* match admin */
             border-color: var(--accent);
-            box-shadow: 0 12px 26px rgba(34,211,238,0.35);
             color: var(--accent);
+            box-shadow: 0 12px 24px rgba(34,211,238,0.35);
         }
         .tf-admin-wrap {
             position: fixed;
