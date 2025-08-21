@@ -31,35 +31,34 @@ def inject_branding_css():
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
         <style>
         :root {
-            --bg1:#0a0f1f;  
+            --bg1:#0f172a;  
             --bg2:#111827;  
             --bg3:#0b1220;
-            --accent:#00f6ff; 
+            --accent:#22d3ee; 
             --text:#e5e7eb;   
         }
+
+        /* Futuristic animated background */
         html, body {
             height: 100%;
-            margin: 0;
-            overflow-x: hidden;
-            background: repeating-linear-gradient(
-                -45deg,
-                var(--bg1) 0px,
-                var(--bg1) 4px,
-                var(--bg2) 4px,
-                var(--bg2) 8px
-            );
-            background-size: 200% 200%;
-            animation: bgmove 20s linear infinite;
+            background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #1e3a8a);
+            background-size: 400% 400%;
+            animation: bgmove 20s ease infinite;
             color: var(--text);
         }
         @keyframes bgmove {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
+
+        /* Container */
         .block-container {
             padding-top: 1rem !important;   /* moved everything up */
             max-width: 1200px;
         }
+
+        /* Title */
         .tf-stage {
             min-height: 92vh;
             display: flex;
@@ -75,28 +74,30 @@ def inject_branding_css():
             text-align: center;
             margin-bottom: 40px;
             color: var(--accent);
-            text-shadow: 0 0 8px rgba(0,246,255,0.8),
-                         0 0 20px rgba(0,246,255,0.6),
-                         0 0 36px rgba(0,246,255,0.3);
+            text-shadow: 0 0 8px rgba(34,211,238,0.7),
+                         0 0 20px rgba(34,211,238,0.4),
+                         0 0 36px rgba(34,211,238,0.25);
             animation: pulse-glow 3s ease-in-out infinite;
         }
         @keyframes pulse-glow {
             0%, 100% {
-                text-shadow: 0 0 8px rgba(0,246,255,0.8),
-                             0 0 20px rgba(0,246,255,0.6),
-                             0 0 36px rgba(0,246,255,0.3);
+                text-shadow: 0 0 8px rgba(34,211,238,0.7),
+                             0 0 20px rgba(34,211,238,0.4),
+                             0 0 36px rgba(34,211,238,0.25);
                 color: var(--accent);
             }
             50% {
-                text-shadow: 0 0 16px rgba(0,246,255,1),
-                             0 0 32px rgba(0,246,255,0.7),
-                             0 0 52px rgba(0,246,255,0.5);
+                text-shadow: 0 0 12px rgba(34,211,238,1),
+                             0 0 28px rgba(34,211,238,0.6),
+                             0 0 48px rgba(34,211,238,0.35);
                 color: #a5f3fc; /* lighter cyan */
             }
         }
+
+        /* Buttons */
         .stButton>button {
-            background: linear-gradient(145deg, #0f172a, #1e293b);
-            border: 2px solid rgba(0,246,255,0.4);
+            background: linear-gradient(145deg, #111827, #1e293b);
+            border: 2px solid rgba(34,211,238,0.4);
             border-radius: 16px;
             padding: 24px 42px;
             font-family: 'Orbitron', ui-sans-serif, system-ui;
@@ -105,27 +106,27 @@ def inject_branding_css():
             color: white;
             letter-spacing: 0.05em;
             cursor: pointer;
-            transition: all 0.25s ease-in-out;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.6),
-                        inset 0 0 12px rgba(0,246,255,0.15);
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
             width: 220px;
             height: 120px;
         }
         .stButton>button:hover {
-            transform: translateY(-4px) scale(1.04);
+            transform: translateY(-4px) scale(1.03);
             border-color: var(--accent);
-            box-shadow: 0 0 18px rgba(0,246,255,0.5),
-                        0 0 36px rgba(0,246,255,0.35);
+            box-shadow: 0 12px 26px rgba(34,211,238,0.35);
             color: var(--accent);
         }
+
+        /* Floating admin button */
         .tf-admin-wrap {
             position: fixed;
             right: 22px;
             bottom: 18px;
         }
         .tf-admin-btn {
-            background: linear-gradient(145deg, #0f172a, #1e293b);
-            border: 2px solid rgba(0,246,255,0.6);
+            background: linear-gradient(145deg, #111827, #1e293b);
+            border: 2px solid rgba(34,211,238,0.6);
             border-radius: 16px;
             padding: 16px 32px;
             font-family: 'Orbitron', ui-sans-serif, system-ui;
@@ -135,15 +136,36 @@ def inject_branding_css():
             letter-spacing: 0.05em;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.6),
-                        inset 0 0 12px rgba(0,246,255,0.15);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
         }
         .tf-admin-btn:hover {
-            transform: translateY(-3px) scale(1.03);
+            transform: translateY(-3px) scale(1.02);
             border-color: var(--accent);
             color: var(--accent);
-            box-shadow: 0 0 18px rgba(0,246,255,0.5),
-                        0 0 36px rgba(0,246,255,0.35);
+            box-shadow: 0 12px 24px rgba(34,211,238,0.35);
+        }
+
+        /* Streamlit tabs (futuristic look) */
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 8px;
+            background: rgba(15,23,42,0.7);
+            border-radius: 12px;
+            padding: 6px 12px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            background: transparent;
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Orbitron', ui-sans-serif;
+            font-weight: 600;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+        .stTabs [aria-selected="true"] {
+            background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+            color: black !important;
+            font-weight: 800;
+            box-shadow: 0 0 12px rgba(34,211,238,0.6);
         }
         </style>
         """,
