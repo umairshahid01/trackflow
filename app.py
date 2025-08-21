@@ -35,9 +35,9 @@ def inject_branding_css():
             --accent:#22d3ee; 
             --text:#e5e7eb;   
         }
-        html, body {
+        html, body, .stApp {
             height: 100%;
-            background: var(--bg);  /* solid fill background */
+            background: var(--bg) !important;  /* enforce solid fill */
             color: var(--text);
         }
         .block-container {
