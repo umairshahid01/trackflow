@@ -1,151 +1,220 @@
 import streamlit as st
+from pathlib import Path
 
-# ---- Custom CSS with Futuristic Nebula Background ----
-st.markdown(
-    """
-    <style>
-    .block-container {
-        padding-top: 1rem !important; /* moved everything up */
-        max-width: 1200px;
-    }
+APP_TITLE = "TrackFlow"
+DATA_DIR = Path("data")
+SECRETS_DIR = Path("secrets")
+ADMIN_PASS_FILE = SECRETS_DIR / "admin_password.txt"
 
-    .tf-stage {
-        min-height: 92vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding-top: 10px; /* reduced from 40px */
-    }
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+SECRETS_DIR.mkdir(parents=True, exist_ok=True)
 
-    /* Futuristic Nebula Background */
-    html, body, .stApp {
-        background: radial-gradient(circle at 20% 30%, rgba(34,211,238,0.08) 0%, transparent 60%),
-                    radial-gradient(circle at 80% 70%, rgba(168,85,247,0.08) 0%, transparent 60%),
-                    radial-gradient(circle at 50% 50%, rgba(59,130,246,0.06) 0%, transparent 70%),
-                    #0a0f1c;  /* deep navy base */
-        background-size: 200% 200%;
-        animation: nebula-move 20s ease-in-out infinite;
-    }
 
-    @keyframes nebula-move {
-        0%   { background-position: 0% 0%; }
-        50%  { background-position: 100% 100%; }
-        100% { background-position: 0% 0%; }
-    }
+# -------------------------
+# Helpers
+# -------------------------
+def load_admin_password(default: str = "admin123") -> str:
+    try:
+        txt = ADMIN_PASS_FILE.read_text(encoding="utf-8").strip()
+        return txt if txt else default
+    except FileNotFoundError:
+        return default
 
-    .tf-title {
-        font-family: 'Orbitron', ui-sans-serif, system-ui;
-        font-weight: 900;
-        font-size: clamp(36px, 5vw, 64px);
-        text-align: center;
-        margin-bottom: 40px;
-        color: var(--accent);
-        text-shadow: 0 0 8px rgba(34,211,238,0.7),
-                     0 0 20px rgba(34,211,238,0.4),
-                     0 0 36px rgba(34,211,238,0.25);
-        animation: pulse-glow 3s ease-in-out infinite;
-    }
 
-    @keyframes pulse-glow {
-        0%, 100% {
+def set_page():
+    st.set_page_config(page_title=APP_TITLE, layout="wide")
+
+
+def inject_branding_css():
+    st.markdown(
+        """
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+        <style>
+        :root {
+            --bg:#0a0f1c;  /* solid futuristic deep navy */
+            --accent:#22d3ee; 
+            --text:#e5e7eb;   
+        }
+        html, body, .stApp {
+            height: 100%;
+            background: var(--bg) !important;  /* enforce solid fill */
+            color: var(--text);
+        }
+        .block-container {
+            padding-top: 1rem !important;   /* moved everything up */
+            max-width: 1200px;
+        }
+        .tf-stage {
+            min-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 10px;  /* reduced from 40px */
+        }
+        .tf-title {
+            font-family: 'Orbitron', ui-sans-serif, system-ui;
+            font-weight: 900;
+            font-size: clamp(36px, 5vw, 64px);
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--accent);
             text-shadow: 0 0 8px rgba(34,211,238,0.7),
                          0 0 20px rgba(34,211,238,0.4),
                          0 0 36px rgba(34,211,238,0.25);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% {
+                text-shadow: 0 0 8px rgba(34,211,238,0.7),
+                             0 0 20px rgba(34,211,238,0.4),
+                             0 0 36px rgba(34,211,238,0.25);
+                color: var(--accent);
+            }
+            50% {
+                text-shadow: 0 0 12px rgba(34,211,238,1),
+                             0 0 28px rgba(34,211,238,0.6),
+                             0 0 48px rgba(34,211,238,0.35);
+                color: #a5f3fc; /* lighter cyan */
+            }
+        }
+        .stButton>button {
+            background: linear-gradient(145deg, #111827, #1e293b);
+            border: 2px solid rgba(34,211,238,0.4);
+            border-radius: 16px;
+            padding: 24px 42px;
+            font-family: 'Orbitron', ui-sans-serif, system-ui;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+            width: 220px;
+            height: 120px;
+        }
+        .stButton>button:hover {
+            transform: translateY(-4px) scale(1.03);
+            border-color: var(--accent);
+            box-shadow: 0 12px 26px rgba(34,211,238,0.35);
             color: var(--accent);
         }
-        50% {
-            text-shadow: 0 0 12px rgba(34,211,238,1),
-                         0 0 28px rgba(34,211,238,0.6),
-                         0 0 48px rgba(34,211,238,0.35);
-            color: #a5f3fc; /* lighter cyan */
+        .tf-admin-wrap {
+            position: fixed;
+            right: 22px;
+            bottom: 18px;
         }
-    }
+        .tf-admin-btn {
+            background: linear-gradient(145deg, #111827, #1e293b);
+            border: 2px solid rgba(34,211,238,0.6);
+            border-radius: 16px;
+            padding: 16px 32px;
+            font-family: 'Orbitron', ui-sans-serif, system-ui;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+        }
+        .tf-admin-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 12px 24px rgba(34,211,238,0.35);
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
-    .stButton>button {
-        background: linear-gradient(145deg, #111827, #1e293b);
-        border: 2px solid rgba(34,211,238,0.4);
-        border-radius: 16px;
-        padding: 24px 42px;
-        font-family: 'Orbitron', ui-sans-serif, system-ui;
-        font-weight: 700;
-        font-size: 18px;
-        color: white;
-        letter-spacing: 0.05em;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-        box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-        width: 220px;
-        height: 120px;
-    }
 
-    .stButton>button:hover {
-        transform: translateY(-4px) scale(1.03);
-        border-color: var(--accent);
-        box-shadow: 0 12px 26px rgba(34,211,238,0.35);
-        color: var(--accent);
-    }
+def init_state():
+    if "current_view" not in st.session_state:
+        st.session_state.current_view = "home"
+    if "show_admin_login" not in st.session_state:
+        st.session_state.show_admin_login = False
+    if "is_admin" not in st.session_state:
+        st.session_state.is_admin = False
+    if "admin_error" not in st.session_state:
+        st.session_state.admin_error = ""
 
-    .tf-admin-wrap {
-        position: fixed;
-        right: 22px;
-        bottom: 18px;
-    }
 
-    .tf-admin-btn {
-        background: linear-gradient(145deg, #111827, #1e293b);
-        border: 2px solid rgba(34,211,238,0.6);
-        border-radius: 16px;
-        padding: 16px 32px;
-        font-family: 'Orbitron', ui-sans-serif, system-ui;
-        font-weight: 700;
-        font-size: 16px;
-        color: white;
-        letter-spacing: 0.05em;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-        box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-    }
+def switch_view(view: str):
+    st.session_state.current_view = view
 
-    .tf-admin-btn:hover {
-        transform: translateY(-3px) scale(1.02);
-        border-color: var(--accent);
-        color: var(--accent);
-        box-shadow: 0 12px 24px rgba(34,211,238,0.35);
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
-# ---- Title ----
-st.markdown("<div class='tf-title'>TrackFlow</div>", unsafe_allow_html=True)
+def admin_login(password_input: str) -> bool:
+    return password_input == load_admin_password()
 
-# ---- Four Slabs in One Row ----
-col1, col2, col3, col4 = st.columns(4, gap="large")
 
-with col1:
-    if st.button("Tab 1"):
-        st.write("Tab 1 clicked!")
+# -------------------------
+# Views
+# -------------------------
+def view_home():
+    st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
+    st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
 
-with col2:
-    if st.button("Tab 2"):
-        st.write("Tab 2 clicked!")
+    # All four slabs in one row
+    cols = st.columns(4, gap="large")
+    labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
+    for i, col in enumerate(cols):
+        with col:
+            if st.button(labels[i], key=f"slab_{labels[i]}", use_container_width=True):
+                switch_view(labels[i])
+                st.experimental_rerun()
 
-with col3:
-    if st.button("Tab 3"):
-        st.write("Tab 3 clicked!")
+    # Floating admin button only
+    st.markdown(
+        """
+        <div class="tf-admin-wrap">
+          <button class="tf-admin-btn" onclick="window.location.hash='#admin'">Admin</button>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-with col4:
-    if st.button("Tab 4"):
-        st.write("Tab 4 clicked!")
 
-# ---- Admin Button (Bottom Right) ----
-st.markdown(
-    """
-    <div class="tf-admin-wrap">
-        <button class="tf-admin-btn">Admin</button>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+def view_role_placeholder(role_name: str):
+    st.markdown(f"### {role_name} — Coming Soon")
+    st.write("This area will hold workflow for the selected user role.")
+    if st.button("⬅ Back to Home"):
+        switch_view("home")
+        st.experimental_rerun()
+
+
+def view_admin():
+    st.markdown("## Admin Panel")
+    if not st.session_state.get("is_admin", False):
+        st.warning("You are not logged in as Admin.")
+        if st.button("Back to Home"):
+            switch_view("home")
+            st.experimental_rerun()
+        return
+    st.write("Admin functionality goes here.")
+
+
+# -------------------------
+# Main app
+# -------------------------
+def main():
+    set_page()
+    inject_branding_css()
+    init_state()
+
+    view = st.session_state.current_view
+    if view == "home":
+        view_home()
+    elif view in ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]:
+        view_role_placeholder(view)
+    elif view == "admin":
+        view_admin()
+    else:
+        switch_view("home")
+        view_home()
+
+
+if __name__ == "__main__":
+    main()
