@@ -31,17 +31,17 @@ def inject_branding_css():
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
         <style>
         :root {
-            --bg:#0a0f1c;  /* deep navy */
+            --bg:#0a0f1c;  /* solid futuristic deep navy */
             --accent:#22d3ee; 
             --text:#e5e7eb;   
         }
         html, body, .stApp {
             height: 100%;
-            background: var(--bg) !important;
+            background: var(--bg) !important;  /* enforce solid fill */
             color: var(--text);
         }
 
-        /* ✨ Nebula Glow Animation */
+        /* ✨ Moving Nebula Glow */
         .stApp::before {
             content: "";
             position: fixed;
@@ -59,7 +59,7 @@ def inject_branding_css():
         }
 
         .block-container {
-            padding-top: 1rem !important;
+            padding-top: 1rem !important;   /* moved everything up */
             max-width: 1200px;
         }
         .tf-stage {
@@ -68,7 +68,7 @@ def inject_branding_css():
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 10px;
+            padding-top: 10px;  /* reduced from 40px */
         }
         .tf-title {
             font-family: 'Orbitron', ui-sans-serif, system-ui;
@@ -93,7 +93,7 @@ def inject_branding_css():
                 text-shadow: 0 0 12px rgba(34,211,238,1),
                              0 0 28px rgba(34,211,238,0.6),
                              0 0 48px rgba(34,211,238,0.35);
-                color: #a5f3fc;
+                color: #a5f3fc; /* lighter cyan */
             }
         }
         .stButton>button {
@@ -175,6 +175,7 @@ def view_home():
     st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
     st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
 
+    # All four slabs in one row
     cols = st.columns(4, gap="large")
     labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
     for i, col in enumerate(cols):
@@ -183,6 +184,7 @@ def view_home():
                 switch_view(labels[i])
                 st.experimental_rerun()
 
+    # Floating admin button only
     st.markdown(
         """
         <div class="tf-admin-wrap">
