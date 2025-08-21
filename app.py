@@ -1,4 +1,4 @@
-"import streamlit as st
+import streamlit as st
 from pathlib import Path
 
 APP_TITLE = "TrackFlow"
@@ -217,4 +217,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() " in this code I want you to only change the font size and style of rectangular slabs exactly the same as used in 'Admin' tab. KEEP EVERYTHING ELSE SAME
+    main()
