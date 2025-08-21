@@ -43,9 +43,8 @@ def inject_branding_css():
             background-size: 400% 400%;
             color: var(--text);
         }
-        /* reduce top padding so no scroll */
         .block-container {
-            padding-top: 0.5rem !important;
+            padding-top: 1rem !important;   /* moved everything up */
             max-width: 1200px;
         }
         .tf-stage {
@@ -54,24 +53,68 @@ def inject_branding_css():
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 10px;   /* was 40px */
+            padding-top: 10px;  /* reduced from 40px */
         }
         .tf-title {
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             font-weight: 900;
             font-size: clamp(36px, 5vw, 64px);
             text-align: center;
-            margin-bottom: 30px; /* was 40px */
+            margin-bottom: 40px;
             text-shadow: 0 6px 18px rgba(0,0,0,0.35);
         }
-        .tf-slabs-row {
-            margin-bottom: 30px; /* was 40px */
+        .stButton>button {
+            background: linear-gradient(145deg, #111827, #1e293b);
+            border: 2px solid rgba(34,211,238,0.4);
+            border-radius: 16px;
+            padding: 24px 42px;
+            font-family: 'Orbitron', ui-sans-serif, system-ui;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+            width: 220px;
+            height: 120px;
         }
-        /* slab + admin styles unchanged ... */
+        .stButton>button:hover {
+            transform: translateY(-4px) scale(1.03);
+            border-color: var(--accent);
+            box-shadow: 0 12px 26px rgba(34,211,238,0.35);
+            color: var(--accent);
+        }
+        .tf-admin-wrap {
+            position: fixed;
+            right: 22px;
+            bottom: 18px;
+        }
+        .tf-admin-btn {
+            background: linear-gradient(145deg, #111827, #1e293b);
+            border: 2px solid rgba(34,211,238,0.6);
+            border-radius: 16px;
+            padding: 16px 32px;
+            font-family: 'Orbitron', ui-sans-serif, system-ui;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+        }
+        .tf-admin-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 12px 24px rgba(34,211,238,0.35);
+        }
         </style>
         """,
         unsafe_allow_html=True,
     )
+
 
 def init_state():
     if "current_view" not in st.session_state:
@@ -99,7 +142,7 @@ def view_home():
     st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
     st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
 
-    # Put all four slabs in one row using columns
+    # All four slabs in one row
     cols = st.columns(4, gap="large")
     labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
     for i, col in enumerate(cols):
@@ -117,6 +160,7 @@ def view_home():
         """,
         unsafe_allow_html=True,
     )
+
 
 def view_role_placeholder(role_name: str):
     st.markdown(f"### {role_name} — Coming Soon")
