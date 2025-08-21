@@ -31,22 +31,33 @@ def inject_branding_css():
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
         <style>
         :root {
-            --bg1:#0f172a;  
+            --bg1:#0a0f1f;  
             --bg2:#111827;  
-            --bg3:#0b1220;
-            --accent:#22d3ee; 
+            --bg3:#1a2235;
+            --accent:#00f6ff; 
+            --accent-glow:#00f6ff;
             --text:#e5e7eb;   
         }
+
         html, body {
             height: 100%;
-            background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+            background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #0d172a);
             background-size: 400% 400%;
+            animation: gradientShift 18s ease infinite;
             color: var(--text);
         }
+
+        @keyframes gradientShift {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
         .block-container {
             padding-top: 1rem !important;   /* moved everything up */
             max-width: 1200px;
         }
+
         .tf-stage {
             min-height: 92vh;
             display: flex;
@@ -55,6 +66,7 @@ def inject_branding_css():
             justify-content: flex-start;
             padding-top: 10px;  /* reduced from 40px */
         }
+
         .tf-title {
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             font-weight: 900;
@@ -62,71 +74,81 @@ def inject_branding_css():
             text-align: center;
             margin-bottom: 40px;
             color: var(--accent);
-            text-shadow: 0 0 8px rgba(34,211,238,0.7),
-                         0 0 20px rgba(34,211,238,0.4),
-                         0 0 36px rgba(34,211,238,0.25);
+            text-shadow: 0 0 8px rgba(0,246,255,0.8),
+                         0 0 20px rgba(0,246,255,0.6),
+                         0 0 36px rgba(0,246,255,0.3);
             animation: pulse-glow 3s ease-in-out infinite;
         }
+
         @keyframes pulse-glow {
             0%, 100% {
-                text-shadow: 0 0 8px rgba(34,211,238,0.7),
-                             0 0 20px rgba(34,211,238,0.4),
-                             0 0 36px rgba(34,211,238,0.25);
+                text-shadow: 0 0 8px rgba(0,246,255,0.8),
+                             0 0 20px rgba(0,246,255,0.6),
+                             0 0 36px rgba(0,246,255,0.3);
                 color: var(--accent);
             }
             50% {
-                text-shadow: 0 0 12px rgba(34,211,238,1),
-                             0 0 28px rgba(34,211,238,0.6),
-                             0 0 48px rgba(34,211,238,0.35);
-                color: #a5f3fc; /* lighter cyan */
+                text-shadow: 0 0 16px rgba(0,246,255,1),
+                             0 0 32px rgba(0,246,255,0.7),
+                             0 0 52px rgba(0,246,255,0.5);
+                color: #a5f3fc;
             }
         }
+
         .stButton>button {
-            background: linear-gradient(145deg, #111827, #1e293b);
-            border: 2px solid rgba(34,211,238,0.4);
+            background: rgba(17, 24, 39, 0.85);
+            border: 2px solid rgba(0,246,255,0.4);
             border-radius: 16px;
             padding: 24px 42px;
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             font-weight: 700;
             font-size: 18px;
-            color: white;
+            color: var(--text);
             letter-spacing: 0.05em;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+            transition: all 0.25s ease-in-out;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.6),
+                        inset 0 0 12px rgba(0,246,255,0.15);
             width: 220px;
             height: 120px;
         }
+
         .stButton>button:hover {
-            transform: translateY(-4px) scale(1.03);
-            border-color: var(--accent);
-            box-shadow: 0 12px 26px rgba(34,211,238,0.35);
+            transform: translateY(-4px) scale(1.04);
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 18px rgba(0,246,255,0.5),
+                        0 0 36px rgba(0,246,255,0.35);
             color: var(--accent);
         }
+
         .tf-admin-wrap {
             position: fixed;
             right: 22px;
             bottom: 18px;
         }
+
         .tf-admin-btn {
-            background: linear-gradient(145deg, #111827, #1e293b);
-            border: 2px solid rgba(34,211,238,0.6);
+            background: rgba(17, 24, 39, 0.9);
+            border: 2px solid rgba(0,246,255,0.6);
             border-radius: 16px;
             padding: 16px 32px;
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             font-weight: 700;
             font-size: 16px;
-            color: white;
+            color: var(--text);
             letter-spacing: 0.05em;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.6),
+                        inset 0 0 12px rgba(0,246,255,0.15);
         }
+
         .tf-admin-btn:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-3px) scale(1.03);
             border-color: var(--accent);
             color: var(--accent);
-            box-shadow: 0 12px 24px rgba(34,211,238,0.35);
+            box-shadow: 0 0 18px rgba(0,246,255,0.5),
+                        0 0 36px rgba(0,246,255,0.35);
         }
         </style>
         """,
