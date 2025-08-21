@@ -9,7 +9,6 @@ ADMIN_PASS_FILE = SECRETS_DIR / "admin_password.txt"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 SECRETS_DIR.mkdir(parents=True, exist_ok=True)
 
-
 # -------------------------
 # Helpers
 # -------------------------
@@ -31,17 +30,17 @@ def inject_branding_css():
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
         <style>
         :root {
-            --bg:#0a0f1c;  /* solid futuristic deep navy */
+            --bg:#0a0f1c;
             --accent:#22d3ee; 
             --text:#e5e7eb;   
         }
         html, body, .stApp {
             height: 100%;
-            background: var(--bg) !important;  /* enforce solid fill */
+            background: var(--bg) !important;
             color: var(--text);
         }
         .block-container {
-            padding-top: 1rem !important;   /* moved everything up */
+            padding-top: 1rem !important;
             max-width: 1200px;
         }
         .tf-stage {
@@ -50,7 +49,7 @@ def inject_branding_css():
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 10px;  /* reduced from 40px */
+            padding-top: 10px;
         }
         .tf-title {
             font-family: 'Orbitron', ui-sans-serif, system-ui;
@@ -75,7 +74,7 @@ def inject_branding_css():
                 text-shadow: 0 0 12px rgba(34,211,238,1),
                              0 0 28px rgba(34,211,238,0.6),
                              0 0 48px rgba(34,211,238,0.35);
-                color: #a5f3fc; /* lighter cyan */
+                color: #a5f3fc;
             }
         }
         .stButton>button {
@@ -125,13 +124,27 @@ def inject_branding_css():
             color: var(--accent);
             box-shadow: 0 12px 24px rgba(34,211,238,0.35);
         }
+        /* Logo placement */
         .tf-logo {
             position: absolute;
-            top: 10px;
+            top: 15px;
             left: 20px;
-            height: 60px;
+            z-index: 1000;
+        }
+        .tf-logo img {
+            height: 50px;
         }
         </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # Inject logo HTML
+    st.markdown(
+        f"""
+        <div class="tf-logo">
+            <img src="trackflow/assets/logo.png" alt="TrackFlow Logo">
+        </div>
         """,
         unsafe_allow_html=True,
     )
@@ -160,18 +173,9 @@ def admin_login(password_input: str) -> bool:
 # Views
 # -------------------------
 def view_home():
-    # Add logo
-    st.markdown(
-        f"""
-        <img src="assets/logo.png" class="tf-logo">
-        """,
-        unsafe_allow_html=True,
-    )
-
     st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
     st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
 
-    # All four slabs in one row
     cols = st.columns(4, gap="large")
     labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
     for i, col in enumerate(cols):
@@ -180,7 +184,6 @@ def view_home():
                 switch_view(labels[i])
                 st.experimental_rerun()
 
-    # Floating admin button only
     st.markdown(
         """
         <div class="tf-admin-wrap">
