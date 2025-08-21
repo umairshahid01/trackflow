@@ -37,28 +37,16 @@ def inject_branding_css():
             --accent:#22d3ee; 
             --text:#e5e7eb;   
         }
-
-        /* Futuristic animated background */
         html, body {
             height: 100%;
-            background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #1e3a8a);
+            background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
             background-size: 400% 400%;
-            animation: bgmove 20s ease infinite;
             color: var(--text);
         }
-        @keyframes bgmove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Container */
         .block-container {
             padding-top: 1rem !important;   /* moved everything up */
             max-width: 1200px;
         }
-
-        /* Title */
         .tf-stage {
             min-height: 92vh;
             display: flex;
@@ -93,8 +81,6 @@ def inject_branding_css():
                 color: #a5f3fc; /* lighter cyan */
             }
         }
-
-        /* Buttons */
         .stButton>button {
             background: linear-gradient(145deg, #111827, #1e293b);
             border: 2px solid rgba(34,211,238,0.4);
@@ -117,8 +103,6 @@ def inject_branding_css():
             box-shadow: 0 12px 26px rgba(34,211,238,0.35);
             color: var(--accent);
         }
-
-        /* Floating admin button */
         .tf-admin-wrap {
             position: fixed;
             right: 22px;
@@ -143,29 +127,6 @@ def inject_branding_css():
             border-color: var(--accent);
             color: var(--accent);
             box-shadow: 0 12px 24px rgba(34,211,238,0.35);
-        }
-
-        /* Streamlit tabs (futuristic look) */
-        .stTabs [data-baseweb="tab-list"] {
-            gap: 8px;
-            background: rgba(15,23,42,0.7);
-            border-radius: 12px;
-            padding: 6px 12px;
-        }
-        .stTabs [data-baseweb="tab"] {
-            background: transparent;
-            border-radius: 10px;
-            color: var(--text);
-            font-family: 'Orbitron', ui-sans-serif;
-            font-weight: 600;
-            padding: 8px 16px;
-            transition: all 0.3s ease;
-        }
-        .stTabs [aria-selected="true"] {
-            background: linear-gradient(135deg, #0ea5e9, #22d3ee);
-            color: black !important;
-            font-weight: 800;
-            box-shadow: 0 0 12px rgba(34,211,238,0.6);
         }
         </style>
         """,
