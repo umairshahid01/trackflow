@@ -31,16 +31,13 @@ def inject_branding_css():
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
         <style>
         :root {
-            --bg1:#0f172a;  
-            --bg2:#111827;  
-            --bg3:#0b1220;
+            --bg:#0a0f1c;  /* solid futuristic deep navy */
             --accent:#22d3ee; 
             --text:#e5e7eb;   
         }
         html, body {
             height: 100%;
-            background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
-            background-size: 400% 400%;
+            background: var(--bg);  /* solid fill background */
             color: var(--text);
         }
         .block-container {
