@@ -61,7 +61,25 @@ def inject_branding_css():
             font-size: clamp(36px, 5vw, 64px);
             text-align: center;
             margin-bottom: 40px;
-            text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+            color: var(--accent);
+            text-shadow: 0 0 8px rgba(34,211,238,0.7),
+                         0 0 20px rgba(34,211,238,0.4),
+                         0 0 36px rgba(34,211,238,0.25);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% {
+                text-shadow: 0 0 8px rgba(34,211,238,0.7),
+                             0 0 20px rgba(34,211,238,0.4),
+                             0 0 36px rgba(34,211,238,0.25);
+                color: var(--accent);
+            }
+            50% {
+                text-shadow: 0 0 12px rgba(34,211,238,1),
+                             0 0 28px rgba(34,211,238,0.6),
+                             0 0 48px rgba(34,211,238,0.35);
+                color: #a5f3fc; /* lighter cyan */
+            }
         }
         .stButton>button {
             background: linear-gradient(145deg, #111827, #1e293b);
