@@ -63,11 +63,10 @@ def inject_branding_css():
             margin-bottom: 40px;
             text-shadow: 0 6px 18px rgba(0,0,0,0.35);
         }
-        .tf-slabs {
+        .tf-slabs-row {
             display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
             justify-content: center;
+            gap: 30px;
             margin-bottom: 40px;
         }
         /* Slab buttons */
@@ -151,7 +150,7 @@ def view_home():
     st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
     st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="tf-slabs">', unsafe_allow_html=True)
+    st.markdown('<div class="tf-slabs-row">', unsafe_allow_html=True)
     labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
     for label in labels:
         if st.button(label, key=f"slab_{label}"):
@@ -159,7 +158,7 @@ def view_home():
             st.experimental_rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Floating admin button
+    # Floating admin button only
     st.markdown(
         """
         <div class="tf-admin-wrap">
@@ -168,8 +167,6 @@ def view_home():
         """,
         unsafe_allow_html=True,
     )
-    if st.button("Admin", key="admin_fallback"):
-        st.session_state.show_admin_login = True
 
 
 def view_role_placeholder(role_name: str):
