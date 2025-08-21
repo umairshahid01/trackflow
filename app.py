@@ -125,6 +125,12 @@ def inject_branding_css():
             color: var(--accent);
             box-shadow: 0 12px 24px rgba(34,211,238,0.35);
         }
+        .tf-logo {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            height: 60px;
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -154,6 +160,14 @@ def admin_login(password_input: str) -> bool:
 # Views
 # -------------------------
 def view_home():
+    # Add logo
+    st.markdown(
+        f"""
+        <img src="assets/logo.png" class="tf-logo">
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
     st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
 
