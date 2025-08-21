@@ -329,4 +329,7 @@ def view_admin():
             st.experimental_rerun()
         return
 
-    with st.expander("🔐 Password Management (for you)")
+    with st.expander("🔐 Password Management (for you)"):
+    st.write(f"Admin password is read from: `{ADMIN_PASS_FILE.as_posix()}`")
+    st.caption("Change it by editing that file (or move to Streamlit Secrets later for better security).")
+
