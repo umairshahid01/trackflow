@@ -44,7 +44,7 @@ def inject_branding_css():
             color: var(--text);
         }
         .block-container {
-            padding-top: 1rem !important;
+            padding-top: 1rem !important;   /* moved everything up */
             max-width: 1200px;
         }
         .tf-stage {
@@ -53,7 +53,7 @@ def inject_branding_css():
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 10px;
+            padding-top: 10px;  /* reduced from 40px */
         }
         .tf-title {
             font-family: 'Orbitron', ui-sans-serif, system-ui;
@@ -61,27 +61,55 @@ def inject_branding_css():
             font-size: clamp(36px, 5vw, 64px);
             text-align: center;
             margin-bottom: 40px;
+            text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+        }
+        .stButton>button {
+            background: linear-gradient(145deg, #111827, #1e293b);
+            border: 2px solid rgba(34,211,238,0.4);
+            border-radius: 16px;
+            padding: 24px 42px;
+            font-family: 'Orbitron', ui-sans-serif, system-ui;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+            width: 220px;
+            height: 120px;
+        }
+        .stButton>button:hover {
+            transform: translateY(-4px) scale(1.03);
+            border-color: var(--accent);
+            box-shadow: 0 12px 26px rgba(34,211,238,0.35);
             color: var(--accent);
-            text-shadow: 0 0 8px rgba(34,211,238,0.7),
-                         0 0 20px rgba(34,211,238,0.4),
-                         0 0 36px rgba(34,211,238,0.25);
-            animation: pulse-glow 3s ease-in-out infinite;
         }
-        @keyframes pulse-glow {
-            0%, 100% {
-                text-shadow: 0 0 8px rgba(34,211,238,0.7),
-                             0 0 20px rgba(34,211,238,0.4),
-                             0 0 36px rgba(34,211,238,0.25);
-                color: var(--accent);
-            }
-            50% {
-                text-shadow: 0 0 12px rgba(34,211,238,1),
-                             0 0 28px rgba(34,211,238,0.6),
-                             0 0 48px rgba(34,211,238,0.35);
-                color: #a5f3fc; /* lighter cyan */
-            }
+        .tf-admin-wrap {
+            position: fixed;
+            right: 22px;
+            bottom: 18px;
         }
-        /* slab + admin styles unchanged ... */
+        .tf-admin-btn {
+            background: linear-gradient(145deg, #111827, #1e293b);
+            border: 2px solid rgba(34,211,238,0.6);
+            border-radius: 16px;
+            padding: 16px 32px;
+            font-family: 'Orbitron', ui-sans-serif, system-ui;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+        }
+        .tf-admin-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 12px 24px rgba(34,211,238,0.35);
+        }
         </style>
         """,
         unsafe_allow_html=True,
