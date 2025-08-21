@@ -1,30 +1,6 @@
 import streamlit as st
-from pathlib import Path
 
-APP_TITLE = "TrackFlow"
-DATA_DIR = Path("data")
-SECRETS_DIR = Path("secrets")
-ADMIN_PASS_FILE = SECRETS_DIR / "admin_password.txt"
-
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-SECRETS_DIR.mkdir(parents=True, exist_ok=True)
-
-
-# -------------------------
-# Helpers
-# -------------------------
-def load_admin_password(default: str = "admin123") -> str:
-    try:
-        txt = ADMIN_PASS_FILE.read_text(encoding="utf-8").strip()
-        return txt if txt else default
-    except FileNotFoundError:
-        return default
-
-
-def set_page():
-    st.set_page_config(page_title=APP_TITLE, layout="wide")
-
-
+# --- Inject CSS ---
 def inject_branding_css():
     st.markdown(
         """
@@ -41,20 +17,27 @@ def inject_branding_css():
 
         html, body {
             height: 100%;
-            background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #0d172a);
-            background-size: 400% 400%;
-            animation: gradientShift 18s ease infinite;
+            margin: 0;
+            overflow-x: hidden;
+            background: repeating-linear-gradient(
+                -45deg,
+                #0a0f1f 0px,
+                #0a0f1f 4px,
+                #111827 4px,
+                #111827 8px
+            );
+            background-size: 200% 200%;
+            animation: bgmove 20s linear infinite;
             color: var(--text);
         }
 
-        @keyframes gradientShift {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
+        @keyframes bgmove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
         }
 
         .block-container {
-            padding-top: 1rem !important;   /* moved everything up */
+            padding-top: 1rem !important; /* moved everything up */
             max-width: 1200px;
         }
 
@@ -64,7 +47,7 @@ def inject_branding_css():
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 10px;  /* reduced from 40px */
+            padding-top: 10px;
         }
 
         .tf-title {
@@ -155,91 +138,40 @@ def inject_branding_css():
         unsafe_allow_html=True,
     )
 
+# --- Render Interface ---
+def main():
+    inject_branding_css()
 
-def init_state():
-    if "current_view" not in st.session_state:
-        st.session_state.current_view = "home"
-    if "show_admin_login" not in st.session_state:
-        st.session_state.show_admin_login = False
-    if "is_admin" not in st.session_state:
-        st.session_state.is_admin = False
-    if "admin_error" not in st.session_state:
-        st.session_state.admin_error = ""
+    st.markdown("<div class='tf-stage'>", unsafe_allow_html=True)
 
+    st.markdown("<div class='tf-title'>TrackFlow</div>", unsafe_allow_html=True)
 
-def switch_view(view: str):
-    st.session_state.current_view = view
+    # Four slabs in one row
+    col1, col2, col3, col4 = st.columns(4, gap="large")
+    with col1:
+        if st.button("Dashboard"):
+            st.session_state.page = "dashboard"
+    with col2:
+        if st.button("Analytics"):
+            st.session_state.page = "analytics"
+    with col3:
+        if st.button("Reports"):
+            st.session_state.page = "reports"
+    with col4:
+        if st.button("Settings"):
+            st.session_state.page = "settings"
 
+    st.markdown("</div>", unsafe_allow_html=True)
 
-def admin_login(password_input: str) -> bool:
-    return password_input == load_admin_password()
-
-
-# -------------------------
-# Views
-# -------------------------
-def view_home():
-    st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
-    st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
-
-    # All four slabs in one row
-    cols = st.columns(4, gap="large")
-    labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
-    for i, col in enumerate(cols):
-        with col:
-            if st.button(labels[i], key=f"slab_{labels[i]}", use_container_width=True):
-                switch_view(labels[i])
-                st.experimental_rerun()
-
-    # Floating admin button only
+    # Admin button fixed bottom right
     st.markdown(
         """
         <div class="tf-admin-wrap">
-          <button class="tf-admin-btn" onclick="window.location.hash='#admin'">Admin</button>
+            <button class="tf-admin-btn">Admin</button>
         </div>
         """,
         unsafe_allow_html=True,
     )
-
-
-def view_role_placeholder(role_name: str):
-    st.markdown(f"### {role_name} — Coming Soon")
-    st.write("This area will hold workflow for the selected user role.")
-    if st.button("⬅ Back to Home"):
-        switch_view("home")
-        st.experimental_rerun()
-
-
-def view_admin():
-    st.markdown("## Admin Panel")
-    if not st.session_state.get("is_admin", False):
-        st.warning("You are not logged in as Admin.")
-        if st.button("Back to Home"):
-            switch_view("home")
-            st.experimental_rerun()
-        return
-    st.write("Admin functionality goes here.")
-
-
-# -------------------------
-# Main app
-# -------------------------
-def main():
-    set_page()
-    inject_branding_css()
-    init_state()
-
-    view = st.session_state.current_view
-    if view == "home":
-        view_home()
-    elif view in ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]:
-        view_role_placeholder(view)
-    elif view == "admin":
-        view_admin()
-    else:
-        switch_view("home")
-        view_home()
-
 
 if __name__ == "__main__":
     main()
