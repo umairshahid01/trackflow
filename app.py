@@ -31,17 +31,35 @@ def inject_branding_css():
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
         <style>
         :root {
-            --bg:#0a0f1c;  /* solid futuristic deep navy */
+            --bg:#0a0f1c;  /* deep navy */
             --accent:#22d3ee; 
             --text:#e5e7eb;   
         }
         html, body, .stApp {
             height: 100%;
-            background: var(--bg) !important;  /* enforce solid fill */
+            background: var(--bg) !important;
             color: var(--text);
         }
+
+        /* ✨ Nebula Glow Animation */
+        .stApp::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(56,189,248,0.15), transparent 60%),
+                        radial-gradient(circle at 80% 70%, rgba(147,51,234,0.12), transparent 60%),
+                        radial-gradient(circle at 50% 50%, rgba(236,72,153,0.08), transparent 70%);
+            background-size: 200% 200%;
+            animation: nebulaMove 40s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+        @keyframes nebulaMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
         .block-container {
-            padding-top: 1rem !important;   /* moved everything up */
+            padding-top: 1rem !important;
             max-width: 1200px;
         }
         .tf-stage {
@@ -50,7 +68,7 @@ def inject_branding_css():
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 10px;  /* reduced from 40px */
+            padding-top: 10px;
         }
         .tf-title {
             font-family: 'Orbitron', ui-sans-serif, system-ui;
@@ -75,7 +93,7 @@ def inject_branding_css():
                 text-shadow: 0 0 12px rgba(34,211,238,1),
                              0 0 28px rgba(34,211,238,0.6),
                              0 0 48px rgba(34,211,238,0.35);
-                color: #a5f3fc; /* lighter cyan */
+                color: #a5f3fc;
             }
         }
         .stButton>button {
@@ -157,7 +175,6 @@ def view_home():
     st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
     st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
 
-    # All four slabs in one row
     cols = st.columns(4, gap="large")
     labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
     for i, col in enumerate(cols):
@@ -166,7 +183,6 @@ def view_home():
                 switch_view(labels[i])
                 st.experimental_rerun()
 
-    # Floating admin button only
     st.markdown(
         """
         <div class="tf-admin-wrap">
