@@ -1,10 +1,14 @@
 import streamlit as st
 import time
 
-# Set page config
+# -------------------------------
+# PAGE CONFIG
+# -------------------------------
 st.set_page_config(page_title="TrackFlow", layout="wide")
 
-# Custom CSS for background, animations, and slabs
+# -------------------------------
+# CUSTOM CSS (Background + Animations + Layout)
+# -------------------------------
 st.markdown(
     """
     <style>
@@ -103,7 +107,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Logo
+# -------------------------------
+# JAZZ LOGO
+# -------------------------------
 st.markdown(
     """
     <div class="logo-container">
@@ -113,13 +119,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Delay before showing rest of UI
+# -------------------------------
+# DELAY FOR ANIMATION
+# -------------------------------
 time.sleep(5)
 
-# TrackFlow Title
+# -------------------------------
+# TRACKFLOW TITLE
+# -------------------------------
 st.markdown('<div class="trackflow-title">TrackFlow</div>', unsafe_allow_html=True)
 
-# Slabs
+# -------------------------------
+# SLABS
+# -------------------------------
 st.markdown(
     """
     <div class="slabs-container">
@@ -132,5 +144,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Admin Button
+# -------------------------------
+# ADMIN BUTTON
+# -------------------------------
 st.markdown('<div class="admin-btn">Admin</div>', unsafe_allow_html=True)
