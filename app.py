@@ -1,4 +1,4 @@
-import streamlit as st
+"import streamlit as st
 from pathlib import Path
 
 APP_TITLE = "TrackFlow"
@@ -78,15 +78,14 @@ def inject_branding_css():
                 color: #a5f3fc; /* lighter cyan */
             }
         }
-        /* Rectangular slabs (user role buttons) now same style as Admin */
         .stButton>button {
             background: linear-gradient(145deg, #111827, #1e293b);
-            border: 2px solid rgba(34,211,238,0.6); /* match admin */
+            border: 2px solid rgba(34,211,238,0.4);
             border-radius: 16px;
-            padding: 16px 32px;  /* match admin */
+            padding: 24px 42px;
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             font-weight: 700;
-            font-size: 16px;  /* same as admin */
+            font-size: 18px;
             color: white;
             letter-spacing: 0.05em;
             cursor: pointer;
@@ -96,10 +95,10 @@ def inject_branding_css():
             height: 120px;
         }
         .stButton>button:hover {
-            transform: translateY(-3px) scale(1.02); /* match admin */
+            transform: translateY(-4px) scale(1.03);
             border-color: var(--accent);
+            box-shadow: 0 12px 26px rgba(34,211,238,0.35);
             color: var(--accent);
-            box-shadow: 0 12px 24px rgba(34,211,238,0.35);
         }
         .tf-admin-wrap {
             position: fixed;
@@ -218,4 +217,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main() " in this code I want you to only change the font size and style of rectangular slabs exactly the same as used in 'Admin' tab. KEEP EVERYTHING ELSE SAME
