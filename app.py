@@ -1,6 +1,5 @@
 import streamlit as st
 from pathlib import Path
-import base64
 
 APP_TITLE = "TrackFlow"
 DATA_DIR = Path("data")
@@ -27,40 +26,33 @@ def set_page():
 
 
 def inject_branding_css():
-    # Convert logo.png into Base64
-    logo_path = Path("trackflow/assets/logo.png")
-    encoded_logo = ""
-    if logo_path.exists():
-        with open(logo_path, "rb") as f:
-            encoded_logo = base64.b64encode(f.read()).decode()
-
     st.markdown(
-        f"""
+        """
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
         <style>
-        :root {{
+        :root {
             --bg:#0a0f1c;  /* solid futuristic deep navy */
             --accent:#22d3ee; 
             --text:#e5e7eb;   
-        }}
-        html, body, .stApp {{
+        }
+        html, body, .stApp {
             height: 100%;
             background: var(--bg) !important;  /* enforce solid fill */
             color: var(--text);
-        }}
-        .block-container {{
+        }
+        .block-container {
             padding-top: 1rem !important;   /* moved everything up */
             max-width: 1200px;
-        }}
-        .tf-stage {{
+        }
+        .tf-stage {
             min-height: 92vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             padding-top: 10px;  /* reduced from 40px */
-        }}
-        .tf-title {{
+        }
+        .tf-title {
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             font-weight: 900;
             font-size: clamp(36px, 5vw, 64px);
@@ -71,22 +63,22 @@ def inject_branding_css():
                          0 0 20px rgba(34,211,238,0.4),
                          0 0 36px rgba(34,211,238,0.25);
             animation: pulse-glow 3s ease-in-out infinite;
-        }}
-        @keyframes pulse-glow {{
-            0%, 100% {{
+        }
+        @keyframes pulse-glow {
+            0%, 100% {
                 text-shadow: 0 0 8px rgba(34,211,238,0.7),
                              0 0 20px rgba(34,211,238,0.4),
                              0 0 36px rgba(34,211,238,0.25);
                 color: var(--accent);
-            }}
-            50% {{
+            }
+            50% {
                 text-shadow: 0 0 12px rgba(34,211,238,1),
                              0 0 28px rgba(34,211,238,0.6),
                              0 0 48px rgba(34,211,238,0.35);
                 color: #a5f3fc; /* lighter cyan */
-            }}
-        }}
-        .stButton>button {{
+            }
+        }
+        .stButton>button {
             background: linear-gradient(145deg, #111827, #1e293b);
             border: 2px solid rgba(34,211,238,0.4);
             border-radius: 16px;
@@ -101,19 +93,19 @@ def inject_branding_css():
             box-shadow: 0 6px 14px rgba(0,0,0,0.4);
             width: 220px;
             height: 120px;
-        }}
-        .stButton>button:hover {{
+        }
+        .stButton>button:hover {
             transform: translateY(-4px) scale(1.03);
             border-color: var(--accent);
             box-shadow: 0 12px 26px rgba(34,211,238,0.35);
             color: var(--accent);
-        }}
-        .tf-admin-wrap {{
+        }
+        .tf-admin-wrap {
             position: fixed;
             right: 22px;
             bottom: 18px;
-        }}
-        .tf-admin-btn {{
+        }
+        .tf-admin-btn {
             background: linear-gradient(145deg, #111827, #1e293b);
             border: 2px solid rgba(34,211,238,0.6);
             border-radius: 16px;
@@ -126,27 +118,14 @@ def inject_branding_css():
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-        }}
-        .tf-admin-btn:hover {{
+        }
+        .tf-admin-btn:hover {
             transform: translateY(-3px) scale(1.02);
             border-color: var(--accent);
             color: var(--accent);
             box-shadow: 0 12px 24px rgba(34,211,238,0.35);
-        }}
-        .tf-logo {{
-            position: fixed;
-            top: 15px;
-            left: 20px;
-            z-index: 1000;
-        }}
-        .tf-logo img {{
-            height: 50px;
-        }}
+        }
         </style>
-
-        <div class="tf-logo">
-            <img src="data:image/png;base64,{encoded_logo}" alt="Logo">
-        </div>
         """,
         unsafe_allow_html=True,
     )
