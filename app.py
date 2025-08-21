@@ -29,7 +29,7 @@ def load_admin_password(default: str = "admin123") -> str:
         return default
 
 def set_page():
-    st.set_page_config(page_title=APP_TITLE, layout="wide", page_icon="📡")
+    st.set_page_config(page_title=APP_TITLE, layout="wide", page_icon="assets/logo.png")
 
 def inject_branding_css():
     # Google Font (tech/futuristic): Orbitron
@@ -85,13 +85,13 @@ def inject_branding_css():
             position: fixed;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%) scale(0.5);
-            opacity: 0;
-            animation: tfLogoIn 1.2s ease-out forwards, tfLogoDock 1.1s ease-in-out 1.4s forwards;
+            transform: translate(-50%, -50%) scale(100); /* 🚀 Start 100x zoom */
+            opacity: 0.8;
+            animation: tfLogoIn 2s ease-out forwards, tfLogoDock 1.2s ease-in-out 2.2s forwards;
             z-index: 10;
         }}
         @keyframes tfLogoIn {{
-            0% {{ opacity: 0; transform: translate(-50%, -50%) scale(0.5); }}
+            0% {{ opacity: 0; transform: translate(-50%, -50%) scale(100); }}
             100% {{ opacity: 1; transform: translate(-50%, -50%) scale(1); }}
         }}
         @keyframes tfLogoDock {{
@@ -112,7 +112,7 @@ def inject_branding_css():
             font-size: clamp(42px, 6vw, 72px);
             letter-spacing: 0.04em;
             text-align: center;
-            margin-top: 28px;
+            margin-top: 180px;
             text-shadow: 0 8px 26px rgba(0,0,0,0.35);
         }}
 
@@ -143,7 +143,7 @@ def inject_branding_css():
             font-weight: 700;
             font-size: clamp(14px, 1.7vw, 18px);
             letter-spacing: 0.06em;
-            color: white; /* ✅ Ensures slab text is white */
+            color: white;
         }}
 
         .tf-admin-wrap {{
@@ -203,7 +203,6 @@ def read_image_as_base64(path: Path) -> str:
     return base64.b64encode(data).decode("utf-8")
 
 def show_logo():
-    # ✅ Load from "assets/logo.png"
     logo_b64 = read_image_as_base64(Path("assets/logo.png"))
     if logo_b64:
         st.markdown(
