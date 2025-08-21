@@ -41,9 +41,9 @@ def inject_branding_css():
     )
     # Styling
     st.markdown(
-        f"""
+        """
         <style>
-        :root {{
+        :root {
             --bg1:#0f172a;  
             --bg2:#111827;  
             --bg3:#0b1220;
@@ -51,62 +51,54 @@ def inject_branding_css():
             --muted:#94a3b8;  
             --text:#e5e7eb;   
             --card:#0b1220cc; 
-        }}
+        }
 
-        .block-container {{
+        .block-container {
             padding-top: 0rem;
             padding-bottom: 1.5rem;
             max-width: 1200px;
-        }}
+        }
 
-        html, body {{
+        html, body {
             height: 100%;
             background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
             background-size: 400% 400%;
             animation: gradientShift 18s ease infinite;
             color: var(--text);
-        }}
-        @keyframes gradientShift {{
-            0% {{ background-position: 0% 50%; }}
-            50% {{ background-position: 100% 50%; }}
-            100% {{ background-position: 0% 50%; }}
-        }}
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-        .tf-stage {{
+        .tf-stage {
             position: relative;
             min-height: 92vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-        }}
+        }
 
-        .tf-logo-wrap {{
+        /* 🚫 No animations — docked logo instantly */
+        .tf-logo-wrap {
             position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) scale(100); /* 🚀 Start 100x zoom */
-            opacity: 0.8;
-            animation: tfLogoIn 2s ease-out forwards, tfLogoDock 1.2s ease-in-out 2.2s forwards;
+            left: 26px;
+            top: 20px;
+            transform: scale(0.85);
+            opacity: 1;
             z-index: 10;
-        }}
-        @keyframes tfLogoIn {{
-            0% {{ opacity: 0; transform: translate(-50%, -50%) scale(100); }}
-            100% {{ opacity: 1; transform: translate(-50%, -50%) scale(1); }}
-        }}
-        @keyframes tfLogoDock {{
-            0% {{ left:50%; top:50%; transform: translate(-50%, -50%) scale(1); }}
-            100% {{ left: 26px; top: 20px; transform: translate(0, 0) scale(0.85); }}
-        }}
-        .tf-logo {{
+        }
+        .tf-logo {
             width: 86px; height: 86px; border-radius: 16px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.35);
             object-fit: contain;
             background: #0b1220;
             border: 1px solid rgba(255,255,255,0.08);
-        }}
+        }
 
-        .tf-title {{
+        .tf-title {
             font-family: 'Orbitron', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
             font-weight: 900;
             font-size: clamp(42px, 6vw, 72px);
@@ -114,16 +106,18 @@ def inject_branding_css():
             text-align: center;
             margin-top: 180px;
             text-shadow: 0 8px 26px rgba(0,0,0,0.35);
-        }}
+        }
 
-        .tf-slabs {{
+        .tf-slabs {
             display: grid;
             grid-template-columns: repeat(4, minmax(180px, 1fr));
             gap: 16px;
             margin-top: 26px;
             width: min(1100px, 92vw);
-        }}
-        .tf-slab {{
+        }
+
+        /* 🎨 Styled Streamlit buttons as slabs */
+        .stButton > button {
             background: var(--card);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 18px;
@@ -132,27 +126,27 @@ def inject_branding_css():
             cursor: pointer;
             transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
             user-select: none;
-        }}
-        .tf-slab:hover {{
-            transform: translateY(-3px);
-            border-color: rgba(34, 211, 238, 0.55);
-            box-shadow: 0 18px 45px rgba(0,0,0,0.35);
-        }}
-        .tf-slab-title {{
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             font-weight: 700;
             font-size: clamp(14px, 1.7vw, 18px);
             letter-spacing: 0.06em;
             color: white;
-        }}
+            width: 100%;
+        }
+        .stButton > button:hover {
+            transform: translateY(-3px);
+            border-color: rgba(34, 211, 238, 0.55);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+            color: var(--accent);
+        }
 
-        .tf-admin-wrap {{
+        .tf-admin-wrap {
             position: fixed;
             right: 22px;
             bottom: 18px;
             z-index: 20;
-        }}
-        .tf-admin-btn {{
+        }
+        .tf-admin-btn {
             background: var(--accent);
             color: #062329;
             border: none;
@@ -161,36 +155,36 @@ def inject_branding_css():
             font-weight: 800;
             cursor: pointer;
             box-shadow: 0 10px 28px rgba(0,0,0,0.25);
-        }}
-        .tf-admin-btn:hover {{ filter: brightness(0.95); }}
+        }
+        .tf-admin-btn:hover { filter: brightness(0.95); }
 
-        .tf-modal-overlay {{
+        .tf-modal-overlay {
             position: fixed; inset: 0;
             background: rgba(0,0,0,0.45);
             backdrop-filter: blur(1px);
             display: flex; align-items: center; justify-content: center;
             z-index: 50;
-        }}
-        .tf-modal {{
+        }
+        .tf-modal {
             width: min(420px, 92vw);
             background: var(--card);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 18px;
             padding: 18px;
             box-shadow: 0 30px 70px rgba(0,0,0,0.5);
-        }}
-        .tf-modal h3 {{
+        }
+        .tf-modal h3 {
             font-family: 'Orbitron', ui-sans-serif, system-ui;
             margin-top: 0; margin-bottom: 10px;
-        }}
-        .tf-hint {{ color: var(--muted); font-size: 13px; }}
+        }
+        .tf-hint { color: var(--muted); font-size: 13px; }
 
-        .tf-card {{
+        .tf-card {
             background: var(--card);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 16px;
             padding: 16px;
-        }}
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -250,19 +244,16 @@ def view_home():
     st.markdown('<div class="tf-slabs">', unsafe_allow_html=True)
     cols = st.columns(4, gap="small")
     labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
+
     for i, c in enumerate(cols):
         with c:
-            clicked = st.button(label=labels[i], key=f"slab_{labels[i]}", use_container_width=True)
-            st.markdown(
-                f"""<div class="tf-slab"><div class="tf-slab-title">{labels[i]}</div></div>""",
-                unsafe_allow_html=True,
-            )
-            if clicked:
+            if st.button(labels[i], key=f"slab_{labels[i]}", use_container_width=True):
                 switch_view(labels[i])
                 st.experimental_rerun()
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
+    # Admin button bottom right
     st.markdown(
         """
         <div class="tf-admin-wrap">
@@ -274,6 +265,7 @@ def view_home():
     if st.button("Admin", key="admin_fallback"):
         st.session_state.show_admin_login = True
 
+    # Admin login modal
     if st.session_state.show_admin_login or st.experimental_get_query_params().get('', [''])[0] == 'admin':
         with st.container():
             st.markdown(
@@ -337,44 +329,4 @@ def view_admin():
             st.experimental_rerun()
         return
 
-    with st.expander("🔐 Password Management (for you)"):
-        st.write(f"Admin password is read from: `{ADMIN_PASS_FILE.as_posix()}`")
-        st.caption("Change it by editing that file (or move to Streamlit Secrets later for better security).")
-
-    st.markdown("### 📂 Update Internal Reference Database")
-    st.write("Upload the latest **MW Sites Database** Excel. This will replace the current internal file used by the platform.")
-
-    uploaded_db = st.file_uploader("Upload MW Sites Database (.xlsx)", type=["xlsx"], key="upload_db")
-
-    if uploaded_db and st.button("Update Database"):
-        DATA_DIR.mkdir(parents=True, exist_ok=True)
-        bytes_data = uploaded_db.read()
-        INTERNAL_DB_PATH.write_bytes(bytes_data)
-        st.success(f"Database updated successfully → `{INTERNAL_DB_PATH.as_posix()}`")
-
-    st.divider()
-    if st.button("⬅ Back to Home"):
-        switch_view("home")
-        st.experimental_rerun()
-
-# ===============================
-# -------- MAIN ROUTER ----------
-# ===============================
-def main():
-    set_page()
-    inject_branding_css()
-    init_state()
-
-    view = st.session_state.current_view
-    if view == "home":
-        view_home()
-    elif view in ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]:
-        view_role_placeholder(view)
-    elif view == "admin":
-        view_admin()
-    else:
-        switch_view("home")
-        view_home()
-
-if __name__ == "__main__":
-    main()
+    with st.expander("🔐 Password Management (for you)")
