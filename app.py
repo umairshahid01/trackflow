@@ -150,13 +150,14 @@ def view_home():
     st.markdown('<div class="tf-stage">', unsafe_allow_html=True)
     st.markdown(f'<div class="tf-title">{APP_TITLE}</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="tf-slabs-row">', unsafe_allow_html=True)
+    # Put all four slabs in one row using columns
+    cols = st.columns(4, gap="large")
     labels = ["TXN_User", "OFN_User", "NDTO_User", "BSD_User"]
-    for label in labels:
-        if st.button(label, key=f"slab_{label}"):
-            switch_view(label)
-            st.experimental_rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+    for i, col in enumerate(cols):
+        with col:
+            if st.button(labels[i], key=f"slab_{labels[i]}", use_container_width=True):
+                switch_view(labels[i])
+                st.experimental_rerun()
 
     # Floating admin button only
     st.markdown(
@@ -167,7 +168,6 @@ def view_home():
         """,
         unsafe_allow_html=True,
     )
-
 
 def view_role_placeholder(role_name: str):
     st.markdown(f"### {role_name} — Coming Soon")
